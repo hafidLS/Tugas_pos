@@ -32,8 +32,8 @@ $('#loginForm').on('submit', function(e){
   e.preventDefault(); // cegah reload halaman
 
   let teks = document.getElementById("teks")
-  const username = $('#username').val().trim();
-  const password = $('#password').val().trim();
+  const username = $('#username').val();
+  const password = $('#password').val();
 
   if(!username || !password){
     teks.textContent="username dan password tidak boleh kosong";
@@ -44,16 +44,22 @@ $('#loginForm').on('submit', function(e){
   $.ajax({
     url: "http://localhost:8000/api/login", 
     type: 'POST',
-    contentType: 'application/json',
+    contentType: 'application/json', 
     data: JSON.stringify({
       usernamex: username,
       passwordx: password
     }),
+    
     success: function(req){
       if(req.kode === "01"){
       $('#loginForm')[0].reset(); // kosongkan form
-     window.location.href = "dashboard.html";
-
+    
+    // jika sesuai role
+     if(req.data.role === "superadmin"){
+        location.href = "superadmin/index.html";
+    } else if(req.data.role === "admin"){
+        location.href = "admin/index.html";
+    }
       } 
     },
     error: function(err){
