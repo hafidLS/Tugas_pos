@@ -1,0 +1,129 @@
+/* css loginya */
+
+:root {
+  --bg-utama: #f3f4f1;        /* abu hangat terang */
+  --warna-aksen: #6b7c5b;     /* olive muted */
+  --warna-hover: #59694c;     /* olive lebih dalam */
+  --warna-teks: #2a2a2a;      /* teks utama */
+  --warna-subteks: #70746a;   /* teks sekunder */
+  --border-input: #dadfd4;    /* border lembut */
+}
+
+
+/* reset */
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login {
+  margin: 0;
+  height: 100vh;
+  background-color: var(--bg-utama);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* kotak */
+.kotak-login {
+  background: #ffffff;
+  padding: 32px 28px;
+  width: 320px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+/* judul */
+.judul {
+  margin: 0;
+  color: var(--warna-teks);
+  font-size: 20px;
+}
+
+.keterangan {
+  margin-top: 4px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--warna-subteks);
+}
+
+/* input */
+.baris-input {
+  margin-bottom: 16px;
+}
+
+.baris-input input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-input);
+  font-size: 14px;
+  background-color: #fafafa;
+}
+
+.baris-input input:focus {
+  outline: none;
+  border-color: var(--warna-aksen);
+  background-color: #ffffff;
+}
+
+/* tombol */
+.tombol-login {
+  width: 100%;
+  padding: 11px;
+  background-color: var(--warna-aksen);
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.tombol-login:hover {
+  background-color: var(--warna-hover);
+}
+
+/* lupa password */
+#lupa {
+  display: none;
+}
+.baris-input.floating {
+  position: relative;
+}
+
+.baris-input.floating input {
+  width: 100%;
+  padding: 14px 12px 12px;
+  border-radius: 6px;
+  border: 1px solid #dadfd4;
+  font-size: 14px;
+  background: transparent;
+}
+
+/* label default (di dalam input) */
+.baris-input.floating label {
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  color: #70746a;
+  font-size: 14px;
+  transform: translateY(-50%);
+  transition: 0.2s ease;
+  padding: 0 4px;
+}
+
+/* saat diklik / fokus */
+.baris-input.floating input:focus + label,
+.baris-input.floating input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 15px;
+  color: #000000; /* olive aksen */
+}
+
+#teks{
+    text-align: center;
+}
