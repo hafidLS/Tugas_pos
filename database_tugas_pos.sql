@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Des 2025 pada 11.35
+-- Waktu pembuatan: 31 Des 2025 pada 02.50
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `namanya terserah`
+-- Database: `tugas_pos`
 --
 
 -- --------------------------------------------------------
@@ -15162,17 +15162,19 @@ CREATE TABLE `pengguna` (
   `id_pengguna` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','kasir') NOT NULL
+  `role` enum('admin','kasir','superadmin') NOT NULL,
+  `api_token` varchar(80) DEFAULT NULL,
+  `token_expired_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `pengguna`
 --
 
-INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `role`) VALUES
-(1, 'superadmin', '$2y$06$f2/qQQJWDamaP3AlHYEcwOKXDlcE2NDIPltVSqrh5t/vpdKn19gm2', 'admin'),
-(2, 'admin', '$2y$06$vLyz/KyCF4ZKi5ap3Phs/eMTcg0ZpxbODbLdmyN2IQHuABF7BmTci', 'admin'),
-(3, 'kasir1', '$2y$06$sfo/kb6VjaU8ItLbNJGX9ODcTP/8ReynLcENtGF6LshDm4mP0Cthu', 'kasir');
+INSERT INTO `pengguna` (`id_pengguna`, `username`, `password`, `role`, `api_token`, `token_expired_at`) VALUES
+(1, 'superadmin', '$2y$06$f2/qQQJWDamaP3AlHYEcwOKXDlcE2NDIPltVSqrh5t/vpdKn19gm2', 'superadmin', NULL, NULL),
+(2, 'admin', '$2y$06$vLyz/KyCF4ZKi5ap3Phs/eMTcg0ZpxbODbLdmyN2IQHuABF7BmTci', 'admin', 'c9379dc256774da28072bb6f8292768ab2e3f54f4f6b757eca0dc0b1f2d42fd4', '2025-12-30 14:17:18'),
+(3, 'kasir1', '$2y$06$sfo/kb6VjaU8ItLbNJGX9ODcTP/8ReynLcENtGF6LshDm4mP0Cthu', 'kasir', NULL, NULL);
 
 -- --------------------------------------------------------
 
