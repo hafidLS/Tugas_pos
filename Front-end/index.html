@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>Login Sistem POS</title>
   <link rel="stylesheet" href="css/css">
 </head>
+
 <body class="login">
 
   <div class="kotak-login">
@@ -13,62 +15,67 @@
 
     <form id="loginForm">
       <div class="baris-input floating">
-        <input type="text" id="username" placeholder="" >
+        <input type="text" id="username" placeholder="">
         <label for="username">Username</label>
       </div>
 
       <div class="baris-input floating">
-        <input type="password" id="password" placeholder="" >
+        <input type="password" id="password" placeholder="">
         <label for="password">Password</label>
         <a href="" id="lupa"><small>lupa password dan username?</small></a>
       </div>
-        <small><p id="teks"></p></small>
+      <small>
+        <p id="teks"></p>
+      </small>
       <button class="tombol-login" type="submit">Masuk</button>
     </form>
   </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$('#loginForm').on('submit', function(e){
-  e.preventDefault(); // cegah reload halaman
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $('#loginForm').on('submit', function (e) {
+      e.preventDefault(); // cegah reload halaman
 
-  let teks = document.getElementById("teks")
-  const username = $('#username').val();
-  const password = $('#password').val();
+      let teks = document.getElementById("teks")
+      const username = $('#username').val();
+      const password = $('#password').val();
 
-  if(!username || !password){
-    teks.textContent="username dan password tidak boleh kosong";
-    teks.style.color="";
-    return;
-  }
+      if (!username || !password) {
+        teks.textContent = "username dan password tidak boleh kosong";
+        teks.style.color = "";
+        return;
+      }
 
-  $.ajax({
-    url: "http://localhost:8000/api/login", 
-    type: 'POST',
-    contentType: 'application/json', 
-    data: JSON.stringify({
-      usernamex: username,
-      passwordx: password
-    }),
-    
-    success: function(req){
-      if(req.kode === "01"){
-      $('#loginForm')[0].reset(); // kosongkan form
-    
-    // jika sesuai role
-     if(req.data.role === "superadmin"){
-        location.href = "superadmin/index.html";
-    } else if(req.data.role === "admin"){
-        location.href = "admin/index.html";
-    }
-      } 
-    },
-    error: function(err){
-      teks.textContent="username atau password salah silahkan masukan ulang";
-      teks.style.color="red"
-    }
-  });
-});
-</script>
+      $.ajax({
+        url: "http://localhost:8000/api/login",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          usernamex: username,
+          passwordx: password
+        }),
+
+        success: function (req) {
+          if (req.kode === "01") {
+            $('#loginForm')[0].reset(); // kosongkan form
+
+            // jika sesuai role
+            if (req.data.role === "superadmin") {
+              location.href = "superadmin/index.html";
+            } else if (req.data.role === "admin") {
+              location.href = "admin/index.html";
+            } else if (req.data.role === "kasir") {
+              location.href = "kasir/index.html";
+            }
+          }
+        },
+        error: function (err) {
+          teks.textContent = "username atau password salah silahkan masukan ulang";
+          teks.style.color = "red"
+        }
+      });
+    });
+  </script>
 
 </body>
+
 </html>
