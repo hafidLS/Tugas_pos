@@ -3,72 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Sistem POS</title>
-  <link rel="stylesheet" href="css/css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="css/bulma/css/bulma.min.css">
 </head>
 <body class="login">
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-4">
+          <div class="box">
+            <h2 class="title has-text-centered">Login</h2>
+            <p class="has-text-centered">Sistem Point of Sale</p>
 
-  <div class="kotak-login">
-    <h2 class="judul">Login</h2>
-    <p class="keterangan">Sistem Point of Sale</p>
+            <form id="loginForm">
+              <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                  <input class="input" type="text" id="username" placeholder="Username">
+                </div>
+              </div>
 
-    <form id="loginForm">
-      <div class="baris-input floating">
-        <input type="text" id="username" placeholder="" >
-        <label for="username">Username</label>
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" id="password" placeholder="Password">
+                </div>
+                <p class="help"><a href="#" id="lupa">Lupa password dan username?</a></p>
+              </div>
+
+              <p id="teks" class="has-text-centered"></p>
+
+              <div class="field">
+                <div class="control">
+                  <button class="button is-primary is-fullwidth" type="submit">Masuk</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
+</body>
 
-      <div class="baris-input floating">
-        <input type="password" id="password" placeholder="" >
-        <label for="password">Password</label>
-        <a href="" id="lupa"><small>lupa password dan username?</small></a>
-      </div>
-        <small><p id="teks"></p></small>
-      <button class="tombol-login" type="submit">Masuk</button>
-    </form>
-  </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$('#loginForm').on('submit', function(e){
-  e.preventDefault(); // cegah reload halaman
+  $(document).ready(function() {
+    $('#loginForm').on('submit', function(e) {
+        e.preventDefault();
 
-  let teks = document.getElementById("teks")
-  const username = $('#username').val();
-  const password = $('#password').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
 
-  if(!username || !password){
-    teks.textContent="username dan password tidak boleh kosong";
-    teks.style.color="";
-    return;
-  }
+        $('#teks').text('');
 
-  $.ajax({
-    url: "http://localhost:8000/api/login", 
-    type: 'POST',
-    contentType: 'application/json', 
-    data: JSON.stringify({
-      usernamex: username,
-      passwordx: password
-    }),
-    
-    success: function(req){
-      if(req.kode === "01"){
-      $('#loginForm')[0].reset(); // kosongkan form
-    
-    // jika sesuai role
-     if(req.data.role === "superadmin"){
-        location.href = "superadmin/index.html";
-    } else if(req.data.role === "admin"){
-        location.href = "admin/index.html";
-    }
-      } 
-    },
-    error: function(err){
-      teks.textContent="username atau password salah silahkan masukan ulang";
-      teks.style.color="red"
-    }
-  });
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/login',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                usernamex: username,
+                passwordx: password
+            },
+            success: function(response) {
+                console.log(response); // debug
+
+                if(response.kode === "01") { // login berhasil
+                    sessionStorage.setItem('api_token', response.token);
+                    let role = response.data.role;
+
+                    $('#teks').removeClass('has-text-danger').addClass('has-text-success').text('Login berhasil!');
+
+                    setTimeout(function() {
+                        if(role === 'admin') {
+                            window.location.href = 'admin/index.html';
+                        } else if(role === 'superadmin') {
+                            window.location.href = 'superadmin/index.html';
+                        } else if(role === 'kasir') {
+                            window.location.href = 'kasir/index.html';
+                        } else {
+                            alert('Role tidak dikenali!');
+                        }
+                    }, 500);
+
+                } else {
+                    $('#teks').removeClass('has-text-success').addClass('has-text-danger').text(response.message || 'Login gagal');
+                }
+            },
+            error: function(xhr) {
+                $('#teks').removeClass('has-text-success').addClass('has-text-danger').text('Terjadi kesalahan. Silakan coba lagi.');
+                console.error(xhr.responseText);
+            }
+        });
+    });
 });
 </script>
+
 
 </body>
 </html>

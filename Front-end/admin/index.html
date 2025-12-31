@@ -10,10 +10,74 @@
   <h1>Selamat datang!</h1>
   <p>Ini halaman admin.</p>
 
-  <button id="btn" onclick="logout()">logout</button>
+  <button id="logoutBtn" onclick="logout()">logout</button>
 
-  <script>
+  
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    let token = sessionStorage.getItem('api_token');
 
-  </script>
+    if (!token) {
+        alert('Silakan login terlebih dahulu');
+        window.location.href = '../index.html';
+        return;
+    }
+
+    $.ajax({
+        url: 'http://127.0.0.1:8000/api/profile',
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function (res) {
+            console.log('PROFILE:', res);
+
+            // contoh: tampilkan username
+            $('#username').text(res.username);
+
+            // proteksi role
+            if (res.role !== 'admin') {
+                alert('Akses ditolak!');
+                window.location.href = '../index.html';
+            }
+        },
+        error: function (xhr) {
+            sessionStorage.clear();
+            alert('Sesi habis, silakan login ulang');
+            window.location.href = '../index.html';
+        }
+    });
+});
+$('#logoutBtn').on('click', function () {
+    let token = sessionStorage.getItem('api_token');
+
+    $.ajax({
+        url: 'http://127.0.0.1:8000/api/logout',
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function (response) {
+            sessionStorage.clear();
+            alert(response.message || 'Logout berhasil!');
+            window.location.href = '../index.html';
+        },
+        error: function (xhr) {
+            sessionStorage.clear();
+
+            if (xhr.status === 401) {
+                alert('Sesi sudah habis, silakan login ulang');
+            } else {
+                alert('Terjadi kesalahan saat logout');
+            }
+
+            window.location.href = '../index.html';
+        }
+    });
+});
+
+</script>
+
 </body>
 </html>
