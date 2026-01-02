@@ -1,0 +1,219 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<section class="section">
+  <h1 class="title">
+    <i class="fa fa-chart-line"></i> Laporan
+  </h1>
+  <p class="subtitle">Rekap transaksi penjualan</p>
+
+  <!-- FILTER -->
+  <!-- SUMMARY CARD -->
+  <div class="columns mb-5">
+    <div class="column">
+      <div class="notification is-info is-light">
+        <p class="heading">Total Transaksi</p>
+        <p class="title">128</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="notification is-success is-light">
+        <p class="heading">Pendapatan</p>
+        <p class="title">Rp 12.500.000</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="notification is-warning is-light">
+        <p class="heading">Produk Terjual</p>
+        <p class="title">340</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="notification is-danger is-light">
+        <p class="heading">Rata-rata</p>
+        <p class="title">Rp 97.000</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABEL -->
+  <div class="box">
+    <!-- TOOLBAR -->
+    <div class="columns is-vcentered mb-4">
+
+  <!-- SEARCH (KIRI) -->
+  <div class="column is-3">
+    <input id="searchInput" class="input" type="text" placeholder="Cari transaksi...">
+  </div>
+
+  <!-- DARI -->
+  <div class="column is-2">
+    <label class="label is-small">Dari</label>
+    <input type="date" class="input">
+  </div>
+
+  <!-- SAMPAI -->
+  <div class="column is-2">
+    <label class="label is-small">Sampai</label>
+    <input type="date" class="input">
+  </div>
+
+  <!-- JENIS -->
+  <div class="column is-2">
+    <label class="label is-small">Jenis</label>
+    <div class="select is-fullwidth">
+      <select>
+        <option>Semua</option>
+        <option>Berhasil</option>
+        <option>Pending</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- BUTTON -->
+  <div class="column is-2">
+    <label class="label is-small">&nbsp;</label>
+    <button class="button is-primary is-fullwidth">
+      <i class="fa fa-filter"></i>&nbsp;Terapkan
+    </button>
+  </div>
+
+  <!-- LIMIT (KANAN) -->
+  <div class="column is-1">
+    <label class="label is-small">Limit</label>
+    <div class="select is-fullwidth">
+      <select id="rowsPerPage">
+        <option>5</option>
+        <option selected>10</option>
+        <option>20</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+
+    <!-- TABLE -->
+    <table class="table is-fullwidth is-striped is-hoverable" id="laporanTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>No Transaksi</th>
+          <th>Kasir</th>
+          <th>Metode</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td>1</td>
+          <td>2025-01-10</td>
+          <td>TRX001</td>
+          <td>Admin</td>
+          <td>Cash</td>
+          <td>Rp 150.000</td>
+          <td><span class="tag is-success">Berhasil</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>2025-01-10</td>
+          <td>TRX002</td>
+          <td>Kasir 1</td>
+          <td>QRIS</td>
+          <td>Rp 85.000</td>
+          <td><span class="tag is-warning">Pending</span></td>
+        </tr>
+        <!-- tambah data dummy bebas -->
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <nav class="pagination is-centered mt-4">
+      <ul class="pagination-list" id="pagination"></ul>
+    </nav>
+  </div>
+
+  <!-- CETAK -->
+  <div class="has-text-right">
+    <button class="button is-link">
+      <i class="fa fa-print"></i>&nbsp;Cetak Laporan
+    </button>
+  </div>
+</section>
+<script>
+const rowsPerPageSelect = document.getElementById("rowsPerPage");
+const searchInput = document.getElementById("searchInput");
+const tableBody = document.getElementById("tableBody");
+const pagination = document.getElementById("pagination");
+
+let rows = Array.from(tableBody.querySelectorAll("tr"));
+let currentPage = 1;
+
+function renderTable() {
+  const rowsPerPage = parseInt(rowsPerPageSelect.value);
+  const keyword = searchInput.value.toLowerCase();
+
+  let filteredRows = rows.filter(row =>
+    row.innerText.toLowerCase().includes(keyword)
+  );
+
+  const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+  tableBody.innerHTML = "";
+
+  let start = (currentPage - 1) * rowsPerPage;
+  let end = start + rowsPerPage;
+
+  filteredRows.slice(start, end).forEach((row, index) => {
+    row.children[0].innerText = start + index + 1;
+    tableBody.appendChild(row);
+  });
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  pagination.innerHTML = "";
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a class="pagination-link ${i === currentPage ? "is-current" : ""}">
+        ${i}
+      </a>`;
+    li.onclick = () => {
+      currentPage = i;
+      renderTable();
+    };
+    pagination.appendChild(li);
+  }
+}
+
+rowsPerPageSelect.onchange = () => {
+  currentPage = 1;
+  renderTable();
+};
+
+searchInput.onkeyup = () => {
+  currentPage = 1;
+  renderTable();
+};
+
+renderTable();
+new Chart(document.getElementById('grafikPenjualan'), {
+  type: 'bar',
+  data: {
+    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'],
+    datasets: [{
+      label: 'Total Penjualan',
+      data: [200000, 350000, 300000, 500000, 450000],
+      backgroundColor: '#485fc7'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: true } }
+  }
+});
+
+</script>
+
+

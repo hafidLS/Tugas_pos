@@ -1,0 +1,195 @@
+
+<section class="section">
+  <h1 class="title">
+    <i class="fa fa-chart-line"></i> Data Produk  </h1>
+  <p class="subtitle">Produk</p>
+
+  <!-- FILTER -->
+
+    
+
+
+  <!-- SUMMARY CARD -->
+  <div class="columns mb-5">
+    <div class="column">
+      <div class="notification is-info is-light">
+        <p class="heading">Jumlah produk</p>
+        <p class="title">128</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABEL -->
+  <div class="box">
+    <!-- TOOLBAR -->
+   <div class="columns is-vcentered mb-3">
+
+  <!-- SEARCH -->
+  <div class="column is-4">
+    <label class="label">Cari</label>
+    <input id="searchInput" class="input" type="text" placeholder="Cari Produk...">
+  </div>
+
+  <!-- KATEGORI -->
+  <div class="column is-3">
+    <label class="label">Kategori</label>
+    <div class="select is-fullwidth">
+      <select>
+        <option value="">Semua</option>
+        <option>Makanan</option>
+        <option>Minuman</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- BUTTON -->
+  <div class="column is-2">
+    <label class="label">&nbsp;</label>
+    <button class="button is-primary is-fullwidth">
+      <i class="fa fa-filter"></i>&nbsp;Terapkan
+    </button>
+  </div>
+
+  <!-- LIMIT -->
+  <div class="column is-3 has-text-right">
+    <label class="label">Tampilkan</label>
+    <div class="select is-fullwidth">
+      <select id="rowsPerPage">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+
+    <!-- TABLE -->
+    <table class="table is-fullwidth is-striped is-hoverable" id="laporanTable">
+      <thead>
+        <tr>
+         <th>Aksi</th>
+            <th>ID Produk</th>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Harga Satuan</th>
+            <th>Stok</th>
+            <th>Status</th>
+        </tr>
+      </thead>
+            <tbody id="tableBody">
+          <tr>
+            <td>
+              <button class="button is-small is-info">
+                <span class="icon is-small">
+                  <i class="fas fa-edit"></i>
+                </span>
+              </button>
+              <button class="button is-small is-danger">
+                <span class="icon is-small">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </button>
+            </td>
+            <td>PRD001</td>
+            <td>Indomie Goreng</td>
+            <td>Makanan</td>
+            <td>Rp 3.500</td>
+            <td>120</td>
+            <td>
+              <span class="tag is-success">Aktif</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <button class="button is-small is-info">
+                <span class="icon is-small">
+                  <i class="fas fa-edit"></i>
+                </span>
+              </button>
+              <button class="button is-small is-danger">
+                <span class="icon is-small">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </button>
+            </td>
+            <td>PRD002</td>
+            <td>Teh Botol</td>
+            <td>Minuman</td>
+            <td>Rp 4.000</td>
+            <td>0</td>
+            <td>
+              <span class="tag is-danger">Habis</span>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <nav class="pagination is-centered mt-4">
+      <ul class="pagination-list" id="pagination"></ul>
+    </nav>
+  </div>
+
+</section>
+<script>
+    const rowsPerPageSelect = document.getElementById("rowsPerPage");
+const searchInput = document.getElementById("searchInput");
+const tableBody = document.getElementById("tableBody");
+const pagination = document.getElementById("pagination");
+
+let rows = Array.from(tableBody.querySelectorAll("tr"));
+let currentPage = 1;
+
+function renderTable() {
+  const rowsPerPage = parseInt(rowsPerPageSelect.value);
+  const keyword = searchInput.value.toLowerCase();
+
+  let filteredRows = rows.filter(row =>
+    row.innerText.toLowerCase().includes(keyword)
+  );
+
+  const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+  tableBody.innerHTML = "";
+
+  let start = (currentPage - 1) * rowsPerPage;
+  let end = start + rowsPerPage;
+
+  filteredRows.slice(start, end).forEach((row, index) => {
+    row.children[0].innerText = start + index + 1;
+    tableBody.appendChild(row);
+  });
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  pagination.innerHTML = "";
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a class="pagination-link ${i === currentPage ? "is-current" : ""}">
+        ${i}
+      </a>`;
+    li.onclick = () => {
+      currentPage = i;
+      renderTable();
+    };
+    pagination.appendChild(li);
+  }
+}
+
+rowsPerPageSelect.onchange = () => {
+  currentPage = 1;
+  renderTable();
+};
+
+searchInput.onkeyup = () => {
+  currentPage = 1;
+  renderTable();
+};
+
+renderTable();
+</script>

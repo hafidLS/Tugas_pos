@@ -1,0 +1,90 @@
+<section>
+  <h1 class="title">Dashboard</h1>
+  <p class="subtitle">Ringkasan data sistem</p>
+
+  <div class="columns">
+
+    <!-- PRODUK -->
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="icon is-large has-text-info">
+                <i class="fa fa-box fa-2x"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4" id="jumlahProduk">0</p>
+              <p class="subtitle is-6">Jumlah Produk</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENGGUNA -->
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="icon is-large has-text-success">
+                <i class="fa fa-users fa-2x"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4" id="jumlahUser">0</p>
+              <p class="subtitle is-6">Jumlah Pengguna</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSAKSI -->
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="icon is-large has-text-warning">
+                <i class="fa fa-cash-register fa-2x"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4" id="jumlahTransaksi">0</p>
+              <p class="subtitle is-6">Transaksi Hari Ini</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAINNYA -->
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <span class="icon is-large has-text-danger">
+                <i class="fa fa-database fa-2x"></i>
+              </span>
+            </div>
+            <div class="media-content">
+              <p class="title is-4" id="jumlahLain">0</p>
+              <p class="subtitle is-6">Data Lainnya</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script>
+    $('#jumlahProduk').text(120);
+  $('#jumlahUser').text(5);
+  $('#jumlahTransaksi').text(37);
+  $('#jumlahLain').text(8);
+  </script>
+</section>

@@ -1,0 +1,98 @@
+<section class="section">
+  <h1 class="title">
+    <i class="fa fa-users"></i> Manajemen Pengguna
+  </h1>
+  <p class="subtitle">Daftar akun yang terdaftar di sistem</p>
+
+  <!-- TOOLBAR -->
+  <div class="level mb-4">
+    <div class="level-left">
+      <input class="input" type="text" placeholder="Cari pengguna...">
+    </div>
+
+    <div class="level-right">
+      <button class="button is-primary">
+        <i class="fa fa-user-plus"></i>&nbsp;Tambah Pengguna
+      </button>
+    </div>
+  </div>
+
+  <!-- TABEL -->
+  <div class="box">
+    <table class="table is-fullwidth is-striped is-hoverable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>admin</td>
+          <td>admin123</td>
+          <td>
+            <span class="tag is-danger">Admin</span>
+          </td>
+          <td>
+            <span class="tag is-success">Aktif</span>
+          </td>
+          <td>
+            <button class="button is-small is-info">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="button is-small is-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>2</td>
+          <td>kasir1</td>
+          <td>kasir123</td>
+          <td>
+            <span class="tag is-warning">Kasir</span>
+          </td>
+          <td>
+            <span class="tag is-success">Aktif</span>
+          </td>
+          <td>
+            <button class="button is-small is-info">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="button is-small is-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>3</td>
+          <td>kasir2</td>
+          <td>••••••••</td>
+          <td>
+            <span class="tag is-warning">Kasir</span>
+          </td>
+          <td>
+            <span class="tag is-danger">Nonaktif</span>
+          </td>
+          <td>
+            <button class="button is-small is-info">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="button is-small is-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>

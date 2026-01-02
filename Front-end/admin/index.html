@@ -2,81 +2,201 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
-</head>
-<style>
-</style>
-<body>
-  <h1>Selamat datang!</h1>
-  <p>Ini halaman admin.</p>
+  <title>Admin POS</title>
 
-  <button id="logoutBtn" onclick="logout()">logout</button>
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="../css/bulma/css/bulma.min.css">
 
-  
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function () {
-    let token = sessionStorage.getItem('api_token');
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    if (!token) {
-        alert('Silakan login terlebih dahulu');
-        window.location.href = '../index.html';
-        return;
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    .sidebar {
+    min-height: 100vh;
+    transition: all 0.3s ease;
     }
 
+    .sidebar.hide {
+    display: none;
+    }
+
+    .mnsidebar.is-active {
+      background-color: #485fc7;
+      color: white;
+    }
+
+    .content-full {
+      width: 100% !important;
+    }
+    .menu-list a {
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 0.85rem 1.2rem;
+}
+
+.menu-list a i {
+  font-size: 1.4rem;
+  width: 24px;           /* biar icon sejajar */
+  text-align: center;
+  margin-right: 0.75rem;
+}
+
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar is-dark">
+  <div class="navbar-brand">
+    <a class="navbar-item" onclick="toggleSidebar()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <figure class="image is-32x32">
+        <img class="is-rounded" src="assets/profile.jpg" alt="Profile">
+      </figure>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="columns is-gapless">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="column is-2 has-background-dark sidebar p-4">
+    <p class="menu-label has-text-grey-light">Menu</p>
+
+    <ul class="menu-list">
+        <li>
+        <a class="mnsidebar has-text-white is-active"
+           onclick="konten('beranda.html')">
+          <i class="fa fa-home"></i> Beranda
+        </a>
+      <li>
+        <a class="mnsidebar has-text-white"
+           onclick="konten('produk.html')">
+          <i class="fa fa-box"></i> Produk
+        </a>
+      </li>
+      <li>
+        <a class="mnsidebar has-text-white"
+           onclick="konten('transaksi.html')">
+          <i class="fa fa-cash-register"></i> Transaksi
+        </a>
+      </li>
+      <li>
+        <a class="mnsidebar has-text-white"
+           onclick="konten('laporan.html')">
+          <i class="fa fa-chart-line"></i> Laporan
+        </a>
+      </li>
+      <li>
+        <a class="mnsidebar has-text-white"
+         onclick="konten('profile.html')">
+          <i class="fa fa-user"></i> Profile
+        </a>
+      </li>
+      <a class="mnsidebar has-text-white"
+           onclick="konten('pengguna.html')">
+          <i class="fa fa-users"></i> Pengguna
+        </a>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <main id="content" class="column is-10 p-5">
+    <div id="blokkonten">
+    </div>
+  </main>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+    function konten(file) {
+    $("#blokkonten").load(file);
+  }
+
+  function toggleSidebar() {
+    $("#sidebar").toggleClass("hide");
+    $("#content").toggleClass("content-full");
+  }
+
+  $(document).on("click", ".mnsidebar", function () {
+    $(".mnsidebar").removeClass("is-active");
+    $(this).addClass("is-active");
+  });
+
+  // load awal
+  $(document).ready(function () {
+    konten("beranda.html");
+  });
+
+  // $(document).ready(function () {
+//     let token = sessionStorage.getItem('api_token');
+
+//     if (!token) {
+//         alert('Silakan login terlebih dahulu');
+//         window.location.href = '../index.html';
+//         return;
+//     }
+
+//     $.ajax({
+//         url: 'http://127.0.0.1:8000/api/profile',
+//         type: 'GET',
+//         headers: {
+//             'Authorization': 'Bearer ' + token
+//         },
+//         success: function (res) {
+//             console.log('PROFILE:', res);
+
+//             // contoh: tampilkan username
+//             $('#username').text(res.username);
+
+//             // proteksi role
+//             if (res.role !== 'admin') {
+//                 alert('Akses ditolak!');
+//                 window.location.href = '../index.html';
+//             }
+//         },
+//         error: function (xhr) {
+//             sessionStorage.clear();
+//             alert('Sesi habis, silakan login ulang');
+//             window.location.href = '../index.html';
+//         }
+//     });
+// });
+  // LOGOUT
+  $('#logoutBtn').on('click', function () {
+
     $.ajax({
-        url: 'http://127.0.0.1:8000/api/profile',
-        type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        success: function (res) {
-            console.log('PROFILE:', res);
-
-            // contoh: tampilkan username
-            $('#username').text(res.username);
-
-            // proteksi role
-            if (res.role !== 'admin') {
-                alert('Akses ditolak!');
-                window.location.href = '../index.html';
-            }
-        },
-        error: function (xhr) {
-            sessionStorage.clear();
-            alert('Sesi habis, silakan login ulang');
-            window.location.href = '../index.html';
-        }
+      url: 'http://127.0.0.1:8000/api/logout',
+      type: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      success: function (response) {
+        sessionStorage.clear();
+        alert(response.message || 'Logout berhasil!');
+        window.location.href = '../index.html';
+      },
+      error: function () {
+        sessionStorage.clear();
+        alert('Sesi habis, silakan login ulang');
+        window.location.href = '../index.html';
+      }
     });
-});
-$('#logoutBtn').on('click', function () {
-    let token = sessionStorage.getItem('api_token');
-
-    $.ajax({
-        url: 'http://127.0.0.1:8000/api/logout',
-        type: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        success: function (response) {
-            sessionStorage.clear();
-            alert(response.message || 'Logout berhasil!');
-            window.location.href = '../index.html';
-        },
-        error: function (xhr) {
-            sessionStorage.clear();
-
-            if (xhr.status === 401) {
-                alert('Sesi sudah habis, silakan login ulang');
-            } else {
-                alert('Terjadi kesalahan saat logout');
-            }
-
-            window.location.href = '../index.html';
-        }
-    });
-});
-
+  });
+  
+  // DUMMY DATA (buat tugas)
 </script>
 
 </body>

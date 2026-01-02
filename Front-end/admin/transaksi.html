@@ -1,0 +1,99 @@
+<section>
+  <h1 class="title">
+    <i class="fa fa-cash-register"></i> Data Transaksi
+  </h1>
+  <p class="subtitle">Riwayat transaksi yang telah terjadi</p>
+
+  <!-- RINGKASAN -->
+  <div class="columns">
+    <div class="column is-4">
+      <div class="notification is-info">
+        <p class="heading">Total Transaksi</p>
+        <p class="title">37</p>
+      </div>
+    </div>
+
+    <div class="column is-4">
+      <div class="notification is-success">
+        <p class="heading">Pendapatan Hari Ini</p>
+        <p class="title">Rp 1.250.000</p>
+      </div>
+    </div>
+
+    <div class="column is-4">
+      <div class="notification is-warning">
+        <p class="heading">Transaksi Pending</p>
+        <p class="title">2</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABEL TRANSAKSI -->
+  <div class="card">
+    <div class="card-content">
+      <table class="table is-fullwidth is-striped is-hoverable">
+        <div class="level mb-3">
+  <div class="level-left">
+    <input id="searchLaporan" class="input" type="text" placeholder="Cari transaksi...">
+  </div>
+
+  <div class="level-right">
+    <div class="select">
+      <select id="limitLaporan">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tanggal</th>
+            <th>Kasir</th>
+            <th>Total</th>
+            <th>Pembayaran</th>
+            <th>Status</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TRX001</td>
+            <td>02-01-2026</td>
+            <td>Admin</td>
+            <td>Rp 150.000</td>
+            <td>Cash</td>
+            <td>
+              <span class="tag is-success">Selesai</span>
+            </td>
+            <td>
+              <button class="button is-small is-link">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>TRX002</td>
+            <td>02-01-2026</td>
+            <td>Kasir 1</td>
+            <td>Rp 75.000</td>
+            <td>QRIS</td>
+            <td>
+              <span class="tag is-warning">Pending</span>
+            </td>
+            <td>
+              <button class="button is-small is-link">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        
+      </table>
+    </div>
+  </div>
+</section>

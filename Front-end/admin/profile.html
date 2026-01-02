@@ -1,0 +1,58 @@
+<section>
+  <h1 class="title">Profile</h1>
+  <p class="subtitle">Informasi akun yang sedang login</p>
+
+  <div class="columns is-centered">
+    <div class="column is-4">
+
+      <div class="card">
+        <div class="card-content has-text-centered">
+
+          <!-- AVATAR -->
+          <figure class="image is-128x128 is-inline-block">
+            <img class="is-rounded" src="assets/profile.jpg" alt="Profile">
+          </figure>
+
+          <hr>
+
+          <!-- INFO -->
+          <p class="title is-5" id="profileNama">Admin POS</p>
+          <p class="subtitle is-6 has-text-grey" id="profileRole">
+            <i class="fa fa-user-shield"></i> Administrator
+          </p>
+
+          <div class="content has-text-left">
+            <p>
+              <strong>Username:</strong>
+              <span id="profileUsername">admin</span>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <span id="profileEmail">admin@pos.com</span>
+            </p>
+          </div>
+
+          <hr>
+
+          <!-- LOGOUT -->
+          <button id="logoutBtn" class="button is-danger is-fullwidth">
+            <span class="icon">
+              <i class="fa fa-sign-out-alt"></i>
+            </span>
+            <span>Logout</span>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // DUMMY DATA (nanti dari backend)
+  $('#profileNama').text('Admin POS');
+  $('#profileRole').text('Administrator');
+  $('#profileUsername').text('admin');
+  $('#profileEmail').text('admin@pos.com');
+</script>
